@@ -41,6 +41,18 @@ app.put("/library/:id", async (request, reply) => {
   reply.status(200).send(upbook);
 });
 
+app.delete("/library/:id", async (request, reply) => {
+  const { id } = (await request.params) as {
+    id: string;
+  };
+  const delbook = await prisma.library.delete({
+    where: {
+      id: id,
+    },
+  });
+  reply.status(202).send(delbook);
+});
+
 app
   .listen({
     port: 3000,
